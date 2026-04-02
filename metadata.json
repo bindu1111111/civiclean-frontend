@@ -1,0 +1,5 @@
+{
+  "name": "CivicClean AI+ Behavior Tracker",
+  "description": "A proactive AI-driven system for detecting, predicting, and preventing urban littering through real-time reporting and behavioral analytics.",
+  "requestFramePermissions": ["camera", "geolocation"]
+}

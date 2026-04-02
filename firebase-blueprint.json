@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "GarbageReport": {
+      "title": "GarbageReport",
+      "description": "A report of garbage detected in a public place.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" },
+            "address": { "type": "string" }
+          },
+          "required": ["lat", "lng"]
+        },
+        "imageUrl": { "type": "string" },
+        "analysis": {
+          "type": "object",
+          "properties": {
+            "garbage_detected": { "type": "boolean" },
+            "person_detected": { "type": "boolean" },
+            "throwing_action": { "type": "boolean" },
+            "vehicle_detected": { "type": "boolean" },
+            "number_plate": { "type": "string" },
+            "confidence": { "type": "number" },
+            "severity": { "type": "string", "enum": ["low", "medium", "high"] }
+          }
+        },
+        "timestamp": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "verified", "cleaned"] }
+      },
+      "required": ["userId", "location", "imageUrl", "analysis", "timestamp", "status"]
+    },
+    "RiskZone": {
+      "title": "RiskZone",
+      "description": "A zone identified as high risk for littering.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "riskLevel": { "type": "number" },
+        "prediction": { "type": "string" },
+        "lastUpdated": { "type": "number" }
+      },
+      "required": ["lat", "lng", "riskLevel", "prediction", "lastUpdated"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and behavior score.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "displayName": { "type": "string" },
+        "points": { "type": "number" },
+        "reportsCount": { "type": "number" },
+        "rank": { "type": "string" }
+      },
+      "required": ["displayName", "points", "reportsCount", "rank"]
+    }
+  },
+  "firestore": {
+    "/reports/{reportId}": {
+      "schema": "GarbageReport",
+      "description": "Collection of garbage reports."
+    },
+    "/riskZones/{zoneId}": {
+      "schema": "RiskZone",
+      "description": "Collection of predictive risk zones."
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles and scores."
+    }
+  }
+}
